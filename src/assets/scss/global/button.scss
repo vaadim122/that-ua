@@ -1,0 +1,20 @@
+.btn-primary {
+    background: transparent;
+    border: 2px solid $primary_yellow;
+    border-radius: 10px;
+    box-shadow: none;
+    color: $black;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 12px;
+    transition: 0.4s all;
+    outline: none;
+    &:hover, &:focus, &:active {
+        background: $primary_yellow;
+        border: 2px solid $primary_yellow;
+        outline: none;
+        box-shadow: none;
+    }
+}

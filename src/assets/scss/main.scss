@@ -1,0 +1,9 @@
+// Переопределение дефолтных значений переменных Bootstrap 4 и определение своих
+@import "./global/variables.scss";
+@import "./global/media.scss";
+@import "./global/retreat.scss";
+@import "./global/mixin.scss";
+
+// Подключение своих SCSS файлов
+@import "./global/button.scss";
+@import "./global/global-style.scss";

@@ -1,0 +1,84 @@
+@import "../global/variables.scss";
+@import "../global/mixin.scss";
+@import "../global/media.scss";
+
+.list-btn {
+    ul {
+        list-style: none;
+        display: flex;
+        margin: 0;
+        padding: 0;
+        li {
+            margin-right: 15px;
+            a {
+                border: 1px solid $black;
+                border-radius: 10px;
+                display: inline-block;
+                padding: 10px 15px;
+                @include text;
+                text-decoration: none;
+                min-width: 180px;
+                &::before {
+                    content: "";
+                    background-image: url('../../images/star.svg');
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    display: inline-block;
+                    height: 27px;
+                    width: 28px;
+                    vertical-align: middle;
+                    margin-right: 10px;
+                    margin-top: -2px;
+                }
+            }
+            &.btn-list {
+                position: relative;
+                a {
+                    padding-right: 30px;
+                }
+                span {
+                    background-image: url('../../images/dots.svg');
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    display: inline-block;
+                    height: 27px;
+                    width: 28px;
+                    position: absolute;
+                    right: 5px;
+                    top: 10px;
+                    transform: scale(1);
+                    transition: 0.4s all;
+                    cursor: pointer;
+                    &:hover {
+                        transform: scale(1.4);
+                    }
+                }
+            }
+            &.active {
+                a {
+                    border: 2px solid $primary_yellow;
+                    color: $primary_yellow;
+                    font-weight: 500;
+                    padding: 9px 29px 9px 14px;
+                    &::before {
+                        background-image: url('../../images/star-yellow.svg');
+                    }
+                }
+                span {
+                    background-image: url('../../images/dots-yellow.svg');
+                }
+            }
+            &.btn-create {
+                a {
+                    border: 1px dashed $black;
+                    &::before {
+                        background-image: url('../../images/plus.svg');
+                        height: 29px;
+                        width: 29px;
+                        margin-top: -4px;
+                    }
+                }
+            }
+        }
+    }
+}
