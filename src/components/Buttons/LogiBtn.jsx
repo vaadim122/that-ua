@@ -1,14 +1,13 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import { UserManager } from "oidc-client";
 
 const LogiBtn = () => {
   const onLogin = () => {
     const settings = {
       authority:
-        "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
-      clientId: "47c9fad1-7d20-4220-8ff3-091e1278dd2d",
-      redirectUri: "http://localhost:3000/top-list",
+        "https://identity-test.that42.com/.well-known/openid-configuration",
+      clientId: "6ade8b8b-0720-4ade-86e6-78b11d1e2049",
+      redirectUri: "https://iridescent-semolina-f8f7ae.netlify.app/",
     };
 
     const userManager = new UserManager(settings);
