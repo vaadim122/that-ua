@@ -65,7 +65,7 @@ $grid-breakpoints: (
       @content;
     }
   }
-  // max-width: 1499
+  // max-width: 1399
   @mixin extra-large-size-max {
     @media screen and (max-width: #{map-get($grid-breakpoints, xxl) - 1}) {
       @content;
@@ -73,7 +73,7 @@ $grid-breakpoints: (
   }
   
   // EXTRA SUPER LARGE DEVICES
-  // min-width: 1500
+  // min-width: 1400
   @mixin extra-super-large-size-min {
     @media screen and (min-width: #{map-get($grid-breakpoints, xxl)}) {
       @content;

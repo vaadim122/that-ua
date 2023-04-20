@@ -1,0 +1,158 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: <APP_NAME>-config
+  labels:
+    name: <APP_NAME>-config
+  namespace: <NAMESPACE>
+data:
+  ENVIRONMENT: <ENVIRONMENT>
+  env.properties: |
+    window.REACT_APP_AUTHORITY_URL="<REACT_APP_AUTHORITY_URL>"
+    window.REACT_APP_CLIENT_ID="<REACT_APP_CLIENT_ID>"
+    window.REACT_APP_LIST_API="<REACT_APP_LIST_API>"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: <APP_NAME>-secrets
+  labels:
+    name: <APP_NAME>-secrets
+  namespace: <NAMESPACE>
+data:
+  VAULT_BASE_URL: https://that-<NAMESPACE>.vault.azure.net/
+  SECRETS_KEYS: ""
+  SECRETS_FOLDER: /secrets
+  SERVICE_PRINCIPLE_FILE_PATH: /host/azure.json
+  CREATE_KUBERNETES_SECRETS: "true"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <APP_NAME>
+  namespace: <NAMESPACE>
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: <APP_NAME>
+  template:
+    metadata:
+      labels:
+        app: <APP_NAME>
+    spec:
+      initContainers:
+        - name: <APP_NAME>-secrets
+          image: thatdta.azurecr.io/key-vault-agent:2.0
+          securityContext:
+            runAsUser: 0
+          envFrom:
+            - configMapRef:
+                name: <APP_NAME>-secrets
+          env:
+            - name: SECRETS_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          volumeMounts:
+            - name: host-sp
+              mountPath: /host/azure.json
+              readOnly: true
+            - name: secrets
+              mountPath: /secrets
+      containers:
+        - name: <APP_NAME>
+          image: thatdta.azurecr.io/<APP_NAME>:<APP_VERSION>
+          imagePullPolicy: "Always"
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: <APP_NAME>-config
+          volumeMounts:
+            - name: config
+              mountPath: /app/config.js
+              subPath: config.js
+      volumes:
+        - name: secrets
+          emptyDir:
+            medium: Memory
+        - name: host-sp
+          hostPath:
+            # this file contains the cluster service-principal, it exists on every node by default
+            path: /etc/kubernetes/azure.json
+            type: File
+        - name: config
+          configMap:
+            name: web-app-config
+            items:
+              - key: "env.properties"
+                path: "config.js"
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: <APP_NAME>
+  namespace: <NAMESPACE>
+spec:
+  selector:
+    app: <APP_NAME>
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: <APP_NAME>
+  namespace: <NAMESPACE>
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  tls:
+    - hosts:
+        - <DOMAIN_NAME>
+      secretName: <DOMAIN_NAME>-tls-secret
+
+  rules:
+    - host: <DOMAIN_NAME>
+      http: &http
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: <APP_NAME>
+                port:
+                  number: 80
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: <APP_NAME>
+  namespace: <NAMESPACE>
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: <APP_NAME>
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 80

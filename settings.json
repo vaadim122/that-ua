@@ -1,0 +1,22 @@
+{
+    "app_version": "1.0.0",
+    "env": {
+      "test": {
+        "namespace": "test",
+        "environment": "Test",
+        "domain_name": "test.that42.com",
+        "react_app_authority_url": "https://identity-test.that42.com",
+        "react_app_client_id": "6ade8b8b-0720-4ade-86e6-78b11d1e2049",
+        "react_app_list_api": "https://list-api-test.that42.com"
+      },
+      "prod": {
+        "namespace": "production",
+        "environment": "Production",
+        "domain_name": "that42.com",
+        "react_app_authority_url": "https://identity.that42.com",
+        "react_app_client_id": "a28e8f0b-37c2-4107-8a70-b4b15e3694f9",
+        "react_app_list_api": "https://list-api.that42.com"
+      }
+    }
+  }
+  

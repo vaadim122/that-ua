@@ -1,0 +1,43 @@
+@import "../global/variables.scss";
+@import "../global/mixin.scss";
+@import "../global/media.scss";
+
+.heading {
+  display: flex;
+  align-items: center;
+  @include medium-size-max {
+    align-items: center;
+  }
+  &__status {
+    padding-left: 15px;
+    @include medium-size-max {
+      padding-left: 10px;
+    }
+    &--block {
+      display: flex;
+    }
+    p {
+      border-radius: 5px;
+      padding: 1px 10px 2px 7px;
+      border: 1px solid $black;
+      margin: 0 7px;
+      // box-shadow: 0 0 5px -3px black;
+      cursor: pointer;
+      transition: 0.3s all;
+      @include medium-size-max {
+        padding: 2px 5px;
+      }
+      &:hover {
+        box-shadow: 0 0 6px -3px black;
+      }
+      &.status-active {
+        border: 1px solid $primary_yellow;
+        background-color: $primary_yellow;
+        cursor: default;
+        &:hover {
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}

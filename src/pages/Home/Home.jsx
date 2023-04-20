@@ -1,42 +1,28 @@
-import { Outlet, Link } from "react-router-dom";
-import { useOidc } from "@axa-fr/react-oidc";
+import React from "react";
+import { useSelector } from "react-redux";
 
-// import LogiBtn from "../../components/Buttons/LogiBtn";
-import Header from "../../components/Header/Header";
-import FormLogin from "../../components/Form/FotmLogin";
+import ListFilm from "../../components/ListFilm/ListFilm";
+import InstagramLinked from "../../components/Popup/InstagramLinked";
 
-const Home = () => {
-  const { isAuthenticated } = useOidc();
+function TopList() {
+  const lists = useSelector(({ listReducer }) => listReducer);
+  const about_me = useSelector(({ profileReducer }) => profileReducer);
+
+  const list = lists?.find((obj) => {
+    return obj.isSystem && obj.type === "Content";
+  });
+
   return (
     <>
-      {!isAuthenticated && <FormLogin />}
-      {isAuthenticated && (
-        <>
-          <Header />
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/sign-up">Sing Up</Link>
-              </li>
-              <li>
-                <Link to="/sign-in">Sing In</Link>
-              </li>
-              <li>
-                <Link to="/top-list">Top list</Link>
-              </li>
-              {/* <li>
-                <LogiBtn />
-              </li> */}
-            </ul>
-          </nav>
-        </>
-      )}
-
-      <Outlet />
+      {about_me.length !== 0 ? (
+        <InstagramLinked
+          instagramLinked={about_me?.isInstagramLinked}
+          telegramLinked={about_me?.isTelegramLinked}
+        />
+      ) : null}
+      <ListFilm list={list} />
     </>
   );
-};
-export default Home;
+}
+
+export default TopList;

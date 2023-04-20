@@ -1,0 +1,3 @@
+export const REACT_APP_AUTHORITY_URL = window.REACT_APP_AUTHORITY_URL;
+export const REACT_APP_CLIENT_ID = window.REACT_APP_CLIENT_ID;
+export const REACT_APP_LIST_API = window.REACT_APP_LIST_API;

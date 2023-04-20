@@ -12,6 +12,9 @@
         margin: auto;
         padding: 40px 25px 25px;
         position: relative;
+        @include extra-small-size-max {
+            padding: 25px 15px 15px;
+        }
     }
     &__close {
         position: absolute;

@@ -1,7 +1,7 @@
-const Heading = () => {
+const Heading = ({ name }) => {
   return (
-    <div className="heading margin-15t margin-15b">
-      <h1>Мій топ</h1>
+    <div className="heading margin-15t d-none d-md-inline-block">
+      <h1>{name}</h1>
     </div>
   );
 };

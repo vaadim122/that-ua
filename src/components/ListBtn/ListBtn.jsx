@@ -1,22 +1,35 @@
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 
+import { useSelector } from "react-redux";
 import "../../assets/scss/block/list-btn.scss";
+import ButtonList from "./ButtonList";
+import CreateList from "./CreateList";
 
 const ListBtn = () => {
+  const lists = useSelector((state) => state?.listReducer);
+
+  const [new_list, setNewList] = useState();
+
+  // const new_list = lists?.filter((obj) => {
+  //   return obj.type == "Content";
+  // });
+  useEffect(() => {
+    if (lists) {
+      setNewList(
+        lists?.filter((obj) => {
+          return obj.type === "Content";
+        })
+      );
+    }
+  }, [lists]);
+
   return (
-    <div className="list-btn">
+    <div className="list-btn margin-15t">
       <ul>
-        <li className="btn-create">
-          <Link to="/">Новий список</Link>
-        </li>
-        <li className="btn-list active">
-          <Link to="/sign-up">Топ 10</Link>
-          <span className="btn-list__dots"></span>
-        </li>
-        <li className="btn-list">
-          <Link to="/sign-in">Комедії</Link>
-          <span className="btn-list__dots"></span>
-        </li>
+        <CreateList />
+        {new_list?.map((list, i) => (
+          <ButtonList list={list} key={i} />
+        ))}
       </ul>
     </div>
   );

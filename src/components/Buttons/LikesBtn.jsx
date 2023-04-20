@@ -1,14 +1,14 @@
-import like from "../../assets/images/like.png";
-import dislike from "../../assets/images/dislike.png";
+import like_icon from "../../assets/images/like.png";
+import dislike_icon from "../../assets/images/dislike.png";
 
 const LikesBtn = (content) => {
   return (
     <div className="voice-btn">
       <span className="like-film">
-        <img src={like} alt="like" /> {content.like}
+        <img src={like_icon} alt="like" /> {content.like}
       </span>
       <span className="dilike-film">
-        <img src={dislike} alt="dislike" /> {content.dislike}
+        <img src={dislike_icon} alt="dislike" /> {content.dislike}
       </span>
     </div>
   );

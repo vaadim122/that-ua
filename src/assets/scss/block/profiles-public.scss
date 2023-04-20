@@ -1,0 +1,57 @@
+@import "../global/variables.scss";
+@import "../global/mixin.scss";
+@import "../global/media.scss";
+
+.public-profiles-page {
+  margin-top: 50px;
+  &__block {
+    background: $ligth_yellow;
+    border-radius: 20px;
+    display: flex;
+    padding: 15px;
+    height: 100%;
+    box-shadow: 0px 0px 8px -3px rgba(0, 0, 0, 0.25);
+    flex-direction: column;
+    cursor: pointer;
+    img {
+      width: 100px;
+      height: 100px;
+      max-width: 100px;
+      max-height: 100px;
+      overflow: hidden;
+      object-fit: contain;
+      object-position: center;
+      border-radius: 50%;
+      box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+      margin: auto;
+    }
+  }
+  &__content {
+    margin: auto;
+  }
+  &__list {
+    ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      li {
+        text-align: center;
+        a {
+          font-size: 14px;
+          line-height: 1;
+          text-decoration: none;
+          cursor: pointer;
+          color: $black;
+          &:hover {
+            color: $primary_yellow;
+          }
+        }
+      }
+    }
+    &--title {
+      font-size: 14px;
+      line-height: 1;
+      color: $primary_yellow;
+    }
+  }
+}

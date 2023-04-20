@@ -1,0 +1,159 @@
+@import "../global/variables.scss";
+@import "../global/mixin.scss";
+@import "../global/media.scss";
+
+.recomendation {
+  position: fixed;
+  background: #1a1a1a7d;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+  padding: 15px;
+  display: flex;
+  @include extra-small-size-max {
+    padding: 10px;
+  }
+  &__popup {
+    background-color: $ligth_yellow;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 700px;
+    margin: auto;
+    padding: 20px 25px 25px;
+    position: relative;
+    @include extra-small-size-max {
+      padding: 15px 10px;
+    }
+  }
+  &__close {
+    display: flex;
+    span {
+      margin-left: auto;
+      position: relative;
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+      @include extra-small-size-max {
+        margin-right: 5px;
+      }
+      &:before,
+      &:after {
+        position: absolute;
+        left: 7px;
+        content: " ";
+        height: 14px;
+        width: 2px;
+        background-color: $black;
+      }
+      &:before {
+        transform: rotate(45deg);
+      }
+      &:after {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+  &__skip {
+    text-align: right;
+    @include extra-small-size-max {
+      text-align: center;
+    }
+  }
+  &__help-popup {
+    position: fixed;
+    background: #1a1a1a7d;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+    padding: 15px;
+    &__close {
+      display: flex;
+      margin-top: -10px;
+      margin-bottom: 5px;
+      margin-right: -10px;
+      span {
+        margin-left: auto;
+        position: relative;
+        width: 14px;
+        height: 14px;
+        cursor: pointer;
+        @include extra-small-size-max {
+          margin-right: 5px;
+        }
+        &:before,
+        &:after {
+          position: absolute;
+          left: 7px;
+          content: " ";
+          height: 14px;
+          width: 2px;
+          background-color: $black;
+        }
+        &:before {
+          transform: rotate(45deg);
+        }
+        &:after {
+          transform: rotate(-45deg);
+        }
+      }
+    }
+    &-content {
+      background-color: $ligth_yellow;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 350px;
+      margin: auto;
+      padding: 20px 25px 25px;
+      position: absolute;
+      right: 60px;
+      top: 65px;
+      @include large-size-max {
+        right: 50px;
+        top: 55px;
+      }
+      @include medium-size-max {
+        right: 55px;
+        top: 60px;
+      }
+      @include extra-small-size-max {
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 330px;
+      }
+    }
+  }
+}
+
+.recomendation-btn {
+  .help-popup-open {
+    position: relative;
+    z-index: 11;
+    animation: shadow-pulse 1s infinite;
+  }
+}
+
+.recomendation-btn .recomendation__skip button {
+  min-width: 100px;
+  transition: 0.3s all;
+  @include extra-small-size-max {
+    max-width: 80px;
+    padding: 7px;
+  }
+  &:hover {
+    background: transparent;
+    color: $primary_yellow;
+  }
+}
+
+@keyframes shadow-pulse {
+  0% {
+    box-shadow: 0 0 0 0px rgba(247, 187, 66, 1);
+  }
+  100% {
+    box-shadow: 0 0 0 10px rgba(226, 154, 9, 0);
+  }
+}
